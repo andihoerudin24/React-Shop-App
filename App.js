@@ -11,9 +11,11 @@ import { StyleSheet, View, Text } from "react-native";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 import productsReducer from "./store/reducers/products";
+import ShopNavigation from "./navigation/ShopNavigation";
+
 
 const rootReducer = combineReducers({
-  product: productsReducer
+  products: productsReducer
 });
 
 const store = createStore(rootReducer);
@@ -21,9 +23,7 @@ const store = createStore(rootReducer);
 const App = () => {
   return (
     <Provider store={store}>
-      <View style={styles.sectionContainer}>
-        <Text>WELCOME TO REACT NATIVE APPS</Text>
-      </View>
+      <ShopNavigation/>
     </Provider>
   );
 };
