@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, Image, StyleSheet, Button,TouchableOpacity, TouchableNativeFeedback,Platform } from "react-native";
 import Colors from "../../constants/Colors";
+import Font from "../../constants/Font";
+
 
 const ProductItem = props => {
   let TouchableCmp= TouchableOpacity;
@@ -73,11 +75,14 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    marginVertical: 12
+    marginVertical: 2,
+    fontFamily:Font.opensansbold
   },
   price: {
+    fontSize:20,
     fontSize: 14,
-    color: "#888"
+    color: "#888",
+    fontFamily:Font.opensansreguler
   },
   action: {
     flexDirection: "row",

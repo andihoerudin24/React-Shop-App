@@ -10,20 +10,21 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import * as Font from "expo-font";
+
 import productsReducer from "./store/reducers/products";
 import ShopNavigation from "./navigation/ShopNavigation";
-
 
 const rootReducer = combineReducers({
   products: productsReducer
 });
 
 const store = createStore(rootReducer);
-
 const App = () => {
+
   return (
     <Provider store={store}>
-      <ShopNavigation/>
+      <ShopNavigation />
     </Provider>
   );
 };

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import Colors from '../../constants/Colors'
-
+import Font from '../../constants/Font'
 const ProductDetailScreen = props => {
   const productId = props.navigation.getParam("productId");
   const seletedProduct = useSelector(state =>
@@ -45,11 +45,13 @@ const styles = StyleSheet.create({
      color:'#888',
      textAlign:'center',
      marginVertical:20,
+     fontFamily:Font.opensansbold
    },
    description:{
      fontSize:14,
      textAlign:'center',
-     marginHorizontal:20
+     marginHorizontal:20,
+     fontFamily:Font.opensansreguler
    },
    actions:{ 
       marginVertical:10,
