@@ -10,16 +10,17 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
-import * as Font from "expo-font";
-
 import productsReducer from "./store/reducers/products";
+import cartReducer from './store/reducers/cart'
 import ShopNavigation from "./navigation/ShopNavigation";
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
-  products: productsReducer
+  products: productsReducer,
+  cart    :cartReducer
 });
 
-const store = createStore(rootReducer);
+const store = createStore(rootReducer,composeWithDevTools());
 const App = () => {
 
   return (

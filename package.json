@@ -41,7 +41,8 @@
     "jest": "^25.2.4",
     "jetifier": "^1.6.5",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "^16.13.1"
+    "react-test-renderer": "^16.13.1",
+    "redux-devtools-extension": "^2.13.8"
   },
   "jest": {
     "preset": "react-native"
