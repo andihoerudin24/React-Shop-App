@@ -8,21 +8,23 @@
 
 import React from "react";
 import { StyleSheet, View, Text } from "react-native";
-import { createStore, combineReducers } from "redux";
+import { createStore, combineReducers,applyMiddleware,compose  } from "redux";
 import { Provider } from "react-redux";
 import productsReducer from "./store/reducers/products";
-import cartReducer from './store/reducers/cart'
 import ShopNavigation from "./navigation/ShopNavigation";
+import looger from 'redux-logger'
 import {composeWithDevTools} from 'redux-devtools-extension'
+import cartReducer  from './store/reducers/cart'
 
 const rootReducer = combineReducers({
   products: productsReducer,
-  cart    :cartReducer
+  cart     :cartReducer
 });
 
-const store = createStore(rootReducer,composeWithDevTools());
-const App = () => {
 
+const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(looger)));
+
+const App = () => {
   return (
     <Provider store={store}>
       <ShopNavigation />
