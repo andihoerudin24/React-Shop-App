@@ -8,9 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint .",
-    "debug":"open 'rndebugger://set-debugger-loc?host=localhost&port=8081'"
+    "debug": "open 'rndebugger://set-debugger-loc?host=localhost&port=8081'"
   },
   "dependencies": {
+    "@expo/vector-icons": "^10.0.6",
     "@react-native-community/masked-view": "^0.1.7",
     "@unimodules/core": "^5.1.0",
     "@use-expo/font": "^1.0.1",
@@ -21,12 +22,14 @@
     "react": "^16.13.1",
     "react-native": "0.62.0",
     "react-native-custom-fonts": "^1.0.5",
+    "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-reanimated": "^1.7.1",
     "react-native-safe-area-context": "^0.7.3",
     "react-native-safe-area-view": "^1.0.0",
     "react-native-screens": "^2.4.0",
     "react-native-unimodules": "^0.9.0",
+    "react-native-vector-icons": "^6.6.0",
     "react-navigation": "^4.3.5",
     "react-navigation-header-buttons": "^3.0.5",
     "react-navigation-stack": "^2.3.9",

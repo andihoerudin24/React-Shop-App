@@ -10,14 +10,16 @@ import {
 import { useSelector,useDispatch } from "react-redux";
 import Colors from '../../constants/Colors'
 import Font from '../../constants/Font'
-import * as CartAction from '../../store/actions/cart'
+import * as cartAction from '../../store/actions/cart'
 
 const ProductDetailScreen = props => {
+
+  const dispatch = useDispatch()
+
   const productId = props.navigation.getParam("productId");
   const seletedProduct = useSelector(state =>
     state.products.avaliableProducts.find(prod => prod.id === productId)
   );
-  const dispatch = useDispatch()
 
   
   return (
@@ -25,7 +27,7 @@ const ProductDetailScreen = props => {
       <Image style={styles.image} source={{ uri: seletedProduct.imageUrl }} />
       <View style={styles.actions}>
       <Button color={Colors.primary} title="Add To Cart" onPress={() => {
-          dispatch(CartAction.addToCart(seletedProduct))
+          dispatch(cartAction.addToCart(seletedProduct))
        }} />
       </View>
       <Text style={styles.price}>$ {seletedProduct.price.toFixed(2)}</Text>
