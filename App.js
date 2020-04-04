@@ -23,7 +23,6 @@ const rootReducer = combineReducers({
 
 
 const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(looger)));
-
 const App = () => {
   return (
     <Provider store={store}>
@@ -31,13 +30,5 @@ const App = () => {
     </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
 
 export default App;
