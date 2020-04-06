@@ -5,6 +5,8 @@ import CartItemComponent from "../../components/shop/CartItem";
 import Font from "../../constants/Font";
 import Colors from "../../constants/Colors";
 import * as CartAction from "../../store/actions/cart";
+import * as OrderACtion from "../../store/actions/orders";
+
 
 const CartScreens = props => {
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
@@ -36,6 +38,11 @@ const CartScreens = props => {
           color={Colors.accent}
           title="Order Now"
           disabled={cartItems.length === 0}
+          onPress={()=>{
+              dispatch(OrderACtion.addOrder(cartItems,cartTotalAmount))
+          }
+          }
+          
         />
       </View>
       <View>
@@ -57,6 +64,12 @@ const CartScreens = props => {
     </View>
   );
 };
+
+
+
+CartScreens.navigationOptions={
+  headerTitle:'Your Cart'
+}
 
 const styles = StyleSheet.create({
   screen: {

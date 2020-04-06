@@ -12,13 +12,15 @@ import { createStore, combineReducers,applyMiddleware,compose  } from "redux";
 import { Provider } from "react-redux";
 import productsReducer from "./store/reducers/products";
 import cartReducer from './store/reducers/cart'
+import ordersReducer from './store/reducers/orders'
 import ShopNavigation from "./navigation/ShopNavigation";
 import looger from 'redux-logger'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
   products: productsReducer,
-  cart:cartReducer
+  cart:cartReducer,
+  orders:ordersReducer
 });
 
 
