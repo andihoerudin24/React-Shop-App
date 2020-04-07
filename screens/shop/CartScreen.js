@@ -12,7 +12,6 @@ const CartScreens = props => {
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
   const cartItems = useSelector(state => {
     const transFormedCartItems = [];
-    console.log('keranjang',transFormedCartItems)
     for (const key in state.cart.items) {
       transFormedCartItems.push({
         productId: key,
@@ -42,7 +41,6 @@ const CartScreens = props => {
               dispatch(OrderACtion.addOrder(cartItems,cartTotalAmount))
           }
           }
-          
         />
       </View>
       <View>

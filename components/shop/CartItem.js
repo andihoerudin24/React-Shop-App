@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
   },
   itemData: {
     flexDirection: "row",
-    alignItems: "center"
+    alignItems: "center",
+    marginHorizontal:20
   },
   quantity: {
     fontFamily: Font.opensansreguler,
