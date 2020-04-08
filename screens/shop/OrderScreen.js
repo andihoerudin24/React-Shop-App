@@ -12,7 +12,9 @@ const OrdersScrenn = props => {
       data={orders}
       keyExtractor={item => item.id}
       renderItem={itemData =>
-        <OrderItemComponent total={itemData.item.totalAmount} />
+        <OrderItemComponent total={itemData.item.totalAmount.toFixed()} date={itemData.item.readableDate
+        } 
+        items={itemData.item.items} />
       }
     />
   );
