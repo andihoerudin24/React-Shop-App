@@ -13,7 +13,7 @@ import Font from "../constants/Font";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Platform } from "react-native";
 
-
+console.disableYellowBox = true;
 const defaultNvOptions ={
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? Colors.primary : ""
