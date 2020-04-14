@@ -8,23 +8,27 @@ import {
 } from "react-native";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Font from "../../constants/Font";
+
 const CartItem = props => {
   return (
     <View style={styles.cartItem}>
-      <Text style={styles.itemData}>
-        <Text style={styles.quantity}>{props.quantity}</Text>
-        <Text style={styles.mainText}>{props.title}</Text>
-      </Text>
       <View style={styles.itemData}>
-        <Text style={styles.mainText}>$ {props.amount}</Text>
-        {props.deleteable &&(
-          <TouchableOpacity onPress={props.onRemove} style={styles.deleteButoon}>
-        <Ionicons
-            name={Platform.OS === "android" ? "md-trash" : "ios-trash"}
-            color="red"
-            size={16}
-          />
-        </TouchableOpacity>
+        <Text style={styles.quantity}>{props.quantity} </Text>
+        <Text style={styles.mainText}>{props.title}</Text>
+      </View>
+      <View style={styles.itemData}>
+        <Text style={styles.mainText}>${props.amount.toFixed(2)}</Text>
+        {props.deletable && (
+          <TouchableOpacity
+            onPress={props.onRemove}
+            style={styles.deleteButton}
+          >
+            <Ionicons
+              name={Platform.OS === 'android' ? 'md-trash' : 'ios-trash'}
+              size={23}
+              color="red"
+            />
+          </TouchableOpacity>
         )}
       </View>
     </View>
@@ -34,30 +38,28 @@ const CartItem = props => {
 const styles = StyleSheet.create({
   cartItem: {
     padding: 10,
-    backgroundColor: "white",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginHorizontal: 20,
-    flexWrap:'wrap'
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginHorizontal: 20
   },
   itemData: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginHorizontal:20
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   quantity: {
-    fontFamily: Font.opensansreguler,
-    color: "#888",
-    fontSize: 16,
-    letterSpacing:20
+    fontFamily:Font.opensansreguler,
+    color: '#888',
+    fontSize: 16
   },
   mainText: {
     fontFamily: Font.opensansbold,
     fontSize: 16
   },
-  deleteButoon: {
-    marginLeft: 20,
+  deleteButton: {
+    marginLeft: 20
   }
 });
 
 export default CartItem;
+

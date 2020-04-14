@@ -1,19 +1,19 @@
 import React from "react";
 import { View, Text, FlatList, StyleSheet, Button } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import CartItemComponent from "../../components/shop/CartItem";
-import Font from "../../constants/Font";
 import Colors from "../../constants/Colors";
-import * as CartAction from "../../store/actions/cart";
-import * as OrderACtion from "../../store/actions/orders";
+import Font from "../../constants/Font";
+import CartItemComponent from "../../components/shop/CartItem";
+import * as cartAction from "../../store/actions/cart";
+import * as ordersActions from "../../store/actions/orders";
 
 
-const CartScreens = props => {
+const CartScreen = props => {
   const cartTotalAmount = useSelector(state => state.cart.totalAmount);
   const cartItems = useSelector(state => {
-    const transFormedCartItems = [];
+    const transformedCartItems = [];
     for (const key in state.cart.items) {
-      transFormedCartItems.push({
+      transformedCartItems.push({
         productId: key,
         productTitle: state.cart.items[key].productTitle,
         productPrice: state.cart.items[key].productPrice,
@@ -21,80 +21,76 @@ const CartScreens = props => {
         sum: state.cart.items[key].sum
       });
     }
-    return transFormedCartItems.sort((a, b) =>
+    return transformedCartItems.sort((a, b) =>
       a.productId > b.productId ? 1 : -1
     );
   });
   const dispatch = useDispatch();
+
   return (
     <View style={styles.screen}>
       <View style={styles.summary}>
         <Text style={styles.summaryText}>
-          Total: ${" "}
-          <Text style={styles.amount}>${cartTotalAmount.toFixed()}</Text>
+          Total:{' '}
+          <Text style={styles.amount}>${cartTotalAmount.toFixed(2)}</Text>
         </Text>
         <Button
           color={Colors.accent}
           title="Order Now"
           disabled={cartItems.length === 0}
-          deletable
-          onPress={()=>{
-              dispatch(OrderACtion.addOrder(cartItems,cartTotalAmount))
-          }
-          }
+          onPress={() => {
+            dispatch(ordersActions.addOrder(cartItems, cartTotalAmount));
+          }}
         />
       </View>
-      <View>
-        <FlatList
-          data={cartItems}
-          keyExtractor={item => item.productId}
-          renderItem={itemData => (
-            <CartItemComponent
-              quantity={itemData.item.quantity}
-              title={itemData.item.productTitle}
-              amount={itemData.item.sum}
-              onRemove={() => {
-                dispatch(CartAction.removeFromCart(itemData.item.productId));
-              }}
-            />
-          )}
-        />
-      </View>
+      <FlatList
+        data={cartItems}
+        keyExtractor={item => item.productId}
+        renderItem={itemData => (
+          <CartItemComponent
+            quantity={itemData.item.quantity}
+            title={itemData.item.productTitle}
+            amount={itemData.item.sum}
+            deletable
+            onRemove={() => {
+              dispatch(cartAction.removeFromCart(itemData.item.productId));
+            }}
+          />
+        )}
+      />
     </View>
   );
 };
 
-
-
-CartScreens.navigationOptions={
-  headerTitle:'Your Cart'
-}
+CartScreen.navigationOptions = {
+  headerTitle: 'Your Cart'
+};
 
 const styles = StyleSheet.create({
   screen: {
     margin: 20
   },
   summary: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 20,
     padding: 10,
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOpacity: 0.26,
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: { width: 0, height: 2 },
     shadowRadius: 8,
     elevation: 5,
     borderRadius: 10,
-    backgroundColor: "white"
+    backgroundColor: 'white'
   },
   summaryText: {
     fontFamily: Font.opensansbold,
     fontSize: 18
   },
   amount: {
-    color: Colors.accent
+    color: Colors.primary
   }
 });
 
-export default CartScreens;
+export default CartScreen;
