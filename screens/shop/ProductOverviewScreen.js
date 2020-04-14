@@ -9,7 +9,6 @@ import Colors from "../../constants/Colors";
 
 
 const ProductOverviewScreen = props => {
-  let formdata= new Frmf
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
 
