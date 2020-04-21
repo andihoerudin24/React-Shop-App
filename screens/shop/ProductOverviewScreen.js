@@ -1,22 +1,74 @@
-import React from "react";
-import { FlatList, Platform, View, Button } from "react-native";
+import React,{useEffect, useState,useCallback} from "react";
+import { FlatList, Platform, View, Button,ActivityIndicator,StyleSheet,Text } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import ProductItem from "../../components/shop/ProductItem";
 import * as cartAction from "../../store/actions/cart";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI//HeaderButton";
 import Colors from "../../constants/Colors";
+import * as productsActions from '../../store/actions/products'
 
 
 const ProductOverviewScreen = props => {
+  const [isLoading,setIsLoading]=  useState(false);
+  const [error,setError]= useState()
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
+
+  
+  const loadProducts =useCallback(async ()=>{
+    //console.log('LOAD PRODUCTS');
+    setError(null)
+    setIsLoading(true)
+    try{
+      await dispatch(productsActions.fetchProducts())
+    }catch(err){
+      setError(err)
+    }
+    setIsLoading(false)
+  },[dispatch,setIsLoading,setError])
+
+  useEffect(()=>{
+     const willFocusSub= props.navigation.addListener('willFocus',loadProducts)
+     return () =>{
+       willFocusSub.remove()
+     }
+  },[loadProducts]);
+
+  useEffect(()=>{
+    loadProducts()
+  },[dispatch,loadProducts])
 
   const selectItemHandler = (id,title) =>{
     props.navigation.navigate("ProductDetail", {
       productId:id,
       productTitle: title
     });
+  }
+   
+  if(error){
+    return (
+      <View style={styles.centered}>
+        <Text>An Error occured</Text>
+        <Button title="try Again"  onPress={loadProducts} color={Colors.primary} />
+      </View>
+    )
+  }
+
+  if(isLoading){
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size='large' color={Colors.primary} />
+      </View>
+    )
+  }
+
+  if(!isLoading && products.length === 0){
+    return (
+      <View style={styles.centered}>
+          <Text>No Product Found</Text>
+      </View>
+    )
   }
 
   return (
@@ -50,6 +102,14 @@ const ProductOverviewScreen = props => {
     />
   );
 };
+
+const styles = StyleSheet.create({
+  centered:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center'
+  }
+})
 
 ProductOverviewScreen.navigationOptions = navData => {
   return{

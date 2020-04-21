@@ -15,6 +15,7 @@ import cartReducer from './store/reducers/cart'
 import ordersReducer from './store/reducers/orders'
 import ShopNavigation from "./navigation/ShopNavigation";
 import looger from 'redux-logger'
+import ReduxThunk from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
@@ -24,7 +25,7 @@ const rootReducer = combineReducers({
 });
 
 
-const store = createStore(rootReducer,composeWithDevTools(applyMiddleware(looger)));
+const store = createStore(rootReducer,applyMiddleware(ReduxThunk));
 const App = () => {
   return (
     <Provider store={store}>
