@@ -1,7 +1,7 @@
 import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 //import { createAppContainer } from "react-navigation";
-import { createAppContainer } from "react-navigation";
+import { createAppContainer,createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import ProductOverviewScreen from "../screens/shop/ProductOverviewScreen";
 import ProductDetailScreen from "../screens/shop/ProductDetailScreen";
@@ -13,6 +13,7 @@ import Font from "../constants/Font";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Platform } from "react-native";
 import EditProductScreen from "../screens/user/EditProductScreen";
+import AuthScreen from '../screens/user/AuthScreen'
 
 console.disableYellowBox = true;
 const defaultNvOptions = {
@@ -98,4 +99,15 @@ const ShopNavigator = createDrawerNavigator(
   }
 );
 
-export default createAppContainer(ShopNavigator);
+const AuthNavigator = createStackNavigator({
+  Auth:AuthScreen
+},{
+  defaultNavigationOptions:defaultNvOptions
+})
+
+const MainNavigator = createSwitchNavigator({
+   Auth:AuthNavigator,
+   Shop:ShopNavigator
+})
+
+export default createAppContainer(MainNavigator);
