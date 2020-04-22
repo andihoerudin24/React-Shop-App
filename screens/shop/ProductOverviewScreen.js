@@ -11,6 +11,7 @@ import * as productsActions from '../../store/actions/products'
 
 const ProductOverviewScreen = props => {
   const [isLoading,setIsLoading]=  useState(false);
+  const [isrefreshing,setrefreshing]= useState(false)
   const [error,setError]= useState()
   const products = useSelector(state => state.products.availableProducts);
   const dispatch = useDispatch();
@@ -19,13 +20,15 @@ const ProductOverviewScreen = props => {
   const loadProducts =useCallback(async ()=>{
     //console.log('LOAD PRODUCTS');
     setError(null)
-    setIsLoading(true)
+    setrefreshing(true)
+    //setIsLoading(true)
     try{
       await dispatch(productsActions.fetchProducts())
     }catch(err){
       setError(err)
     }
-    setIsLoading(false)
+    setrefreshing(false)
+    //setIsLoading(false)
   },[dispatch,setIsLoading,setError])
 
   useEffect(()=>{
@@ -36,7 +39,10 @@ const ProductOverviewScreen = props => {
   },[loadProducts]);
 
   useEffect(()=>{
-    loadProducts()
+    setIsLoading(true)
+    loadProducts().then(()=>{
+    setIsLoading(false)
+    })
   },[dispatch,loadProducts])
 
   const selectItemHandler = (id,title) =>{
@@ -73,6 +79,8 @@ const ProductOverviewScreen = props => {
 
   return (
     <FlatList
+      onRefresh={loadProducts}
+      refreshing={isrefreshing}
       data={products}
       renderItem={itemData => (
         <ProductItem
