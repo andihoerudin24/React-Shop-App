@@ -6,15 +6,20 @@ import {
   StyleSheet,
   TextInput,
   Platform,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import Font from "../../constants/Font";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import HeaderButton from "../../components/UI//HeaderButton";
 import { useSelector, useDispatch } from "react-redux";
 import * as proudctsActions from "../../store/actions/products";
+import Colors from "../../constants/Colors";
 
 const EditProductScreen = props => {
+  const [isLoading, setisLoading] = useState(false)
+  const [error,setError]= useState();
+
   const prodId = props.navigation.getParam("productId");
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.id === prodId)
@@ -31,23 +36,36 @@ const EditProductScreen = props => {
     editedProduct ? editedProduct.description : ""
   );
 
-  const submitHandler = useCallback(() => {
+  useEffect(() =>{
+     if(error){
+       Alert.alert('An Error occured',error,[{text:'Okay'}]);
+     }
+  },[error])
+
+  const submitHandler = useCallback(async() => {
     if(!titleIsValid){
        Alert.alert('Wrong Input','Please Check the error in the form',[
          {text:'Okay'}
         ])
        return;
     }
-    if (editedProduct) {
-      dispatch(
-        proudctsActions.updateProduct(prodId, title, description, imageUrl)
-      );
-    } else {
-      dispatch(
-        proudctsActions.createProduct(title, description, imageUrl, +price)
-      );
+    setError(null)
+    setisLoading(true)
+    try{
+      if (editedProduct) {
+        await dispatch(
+          proudctsActions.updateProduct(prodId, title, description, imageUrl)
+        );
+      } else {
+        await dispatch(
+          proudctsActions.createProduct(title, description, imageUrl, +price)
+        );
+      }
+      props.navigation.goBack();
+    }catch(err){
+          setError(err.message)
     }
-    props.navigation.goBack();
+    setisLoading(false)
   }, [dispatch, prodId, title, description, imageUrl, price,titleIsValid]);
 
   useEffect(() => {
@@ -61,6 +79,14 @@ const EditProductScreen = props => {
           settitleIsValid(false)
        }
        setTitle(text)
+  }
+
+  if(isLoading){
+    return (
+      <View style={styles.centered}>
+        <ActivityIndicator size="large" color={Colors.primary}/>
+      </View>
+    )
   }
 
   return (
@@ -158,6 +184,11 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderBottomColor: "#ccc",
     borderBottomWidth: 1
+  },
+  centered:{
+    flex:1,
+    justifyContent:'center',
+    alignItems:'center'
   }
 });
 
