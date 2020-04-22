@@ -41,6 +41,7 @@ const CartScreen = props => {
     setIsLoading(false);
   };
 
+  
   return (
     <View style={styles.screen}>
       <Card style={styles.summary}>
