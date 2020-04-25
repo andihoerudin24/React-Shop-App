@@ -1,11 +1,13 @@
-import React,{useState} from "react";
+import React,{useState,useEffect} from "react";
 import {
   StyleSheet,
   ScrollView,
   View,
   KeyboardAvoidingView,
   Button,
-  TextInput
+  TextInput,
+  ActivityIndicator,
+  Alert
 } from "react-native";
 import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
@@ -17,11 +19,33 @@ import * as AuthAction from '../../store/actions/auht'
 const AuthScreen = props => {
   const [email,setemail]= useState('')
   const [password,setpassword]=useState('')
+  const [isSignup,setIsSignup] = useState(false)
+  const [isLoading,setisLoading] = useState(false)
+  const [error,setError] = useState()
   const dispatch = useDispatch()
-  const signuphandler = () =>{
-     dispatch(AuthAction.signup(email,password))
+
+  const Authhandler = async () =>{
+    let action
+      if(isSignup){
+        action=AuthAction.signup(email,password)
+      }else{
+        action=AuthAction.login(email,password)
+      }
+    setError(null)  
+    setisLoading(true)  
+    try{
+      await dispatch(action)
+    }catch(err){
+      setError(err.message)
+    }
+    setisLoading(false) 
   }
 
+  useEffect(() =>{
+    if(error){
+      Alert.alert('An Error Occured!', error,[{text:'Okay'}])
+    }
+  })
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -50,11 +74,12 @@ const AuthScreen = props => {
           />
 
           <View style={styles.buttonContainer}>
-          <Button title="login" color={Colors.primary} onPress={signuphandler} />
+            {isLoading ? <ActivityIndicator size="small" color={Colors.primary} /> :  <Button title={isSignup ? 'Sign Up' : 'Login'} color={Colors.primary} onPress={Authhandler} />
+         }
           </View>
           <View style={styles.buttonContainer}>
-          <Button title="Swithc to Sign Up" color={Colors.accent} onPress={()=>{
-
+          <Button title={`Switch to ${isSignup ? 'Login' : 'Sign Up'}`} color={Colors.accent} onPress={()=>{
+              setIsSignup(prevState => !prevState)
           }} />
           </View>
           
