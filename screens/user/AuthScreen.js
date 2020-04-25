@@ -1,17 +1,27 @@
-import React from "react";
+import React,{useState} from "react";
 import {
   StyleSheet,
   ScrollView,
   View,
   KeyboardAvoidingView,
-  Button
+  Button,
+  TextInput
 } from "react-native";
 import Input from "../../components/UI/Input";
 import Card from "../../components/UI/Card";
 import Colors from '../../constants/Colors'
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch} from 'react-redux'
+import * as AuthAction from '../../store/actions/auht'
 
 const AuthScreen = props => {
+  const [email,setemail]= useState('')
+  const [password,setpassword]=useState('')
+  const dispatch = useDispatch()
+  const signuphandler = () =>{
+     dispatch(AuthAction.signup(email,password))
+  }
+
   return (
     <KeyboardAvoidingView
       behavior="padding"
@@ -21,36 +31,26 @@ const AuthScreen = props => {
         <LinearGradient colors={['#ffedff','#ffe3ff','#192f6a']} style={styles.gradient}>
       <Card style={styles.authContainer}>
         <ScrollView>
-          <Input
-            id="email"
-            label="E-Mail"
+          
+          <TextInput
             keyboardType="email-address"
             required
-            email
             minLength={3}
-            autoCapitalize="none"
-            errorMessage="Please enter a valid email address"
-            onInputChange={() => {}}
-            initialValue=""
+            onChangeText={(text) => {setemail(text)}}
+            placeholder="Email"
           />
 
-          <Input
-            id="password"
-            label="Password"
-            keyboardType="default"
-            secureTextEntry
+          <TextInput
+            keyboardType="password"
             required
-            minLength={5}
-            email
-            autoCapitalize="none"
-            errorMessage="Please enter a valid password"
-            onInputChange={() => {}}
-            initialValue=""
+            minLength={3}
+            onChangeText={(text) => {setpassword(text)}}
+            placeholder="Password"
+            secureTextEntry={true}
           />
+
           <View style={styles.buttonContainer}>
-          <Button title="login" color={Colors.primary} onPress={()=>{
-               props.navigation.navigate("ProductOverview")
-          }} />
+          <Button title="login" color={Colors.primary} onPress={signuphandler} />
           </View>
           <View style={styles.buttonContainer}>
           <Button title="Swithc to Sign Up" color={Colors.accent} onPress={()=>{
