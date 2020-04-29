@@ -5,7 +5,7 @@ export const UPDATE_PRODUCT = "UPDATE_PRODUCT";
 export const SET_PRODUCTS = "SET_PRODUCTS";
 
 export const fetchProducts = () => {
-  return async dispatch => {
+  return async (dispatch,getState) => {
     try {
       const response = await fetch(
         "https://react-native-2f0d8.firebaseio.com/products.json"
@@ -50,8 +50,9 @@ export const deleteProduct = productId => {
 };
 
 export const createProduct = (title, description, imageUrl, price) => {
-  return async dispatch => {
+  return async (dispatch,getState) => {
     //code async code you wantc
+    const userId = getState().auth.userId;
     const response = await fetch(
       "https://react-native-2f0d8.firebaseio.com/products.json",
       {
@@ -63,7 +64,8 @@ export const createProduct = (title, description, imageUrl, price) => {
           title,
           description,
           imageUrl,
-          price
+          price,
+          ownerId:userId
         })
       }
     );
@@ -76,14 +78,18 @@ export const createProduct = (title, description, imageUrl, price) => {
         title,
         description,
         imageUrl,
-        price
+        price,
+        ownerId:userId
       }
     });
   };
 };
 
 export const updateProduct = (id, title, description, imageUrl) => {
-  return async dispatch => {
+  return async (dispatch,getState) => {
+    //console.log(getState())
+    const token= getState().auth.token
+    console.log('token',token);
     const response= await fetch(
       `https://react-native-2f0d8.firebaseio.com/products/${id}.json`,
       {

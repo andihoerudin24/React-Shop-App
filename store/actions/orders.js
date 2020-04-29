@@ -3,10 +3,12 @@ export const SET_ORDERS = "SET_ORDERS";
 import Order from "../../models/order";
 
 export const fetchOrders = () => {
-  return async dispatch => {
+  return async (dispatch,getState) => {
+    const userId = getState().auth.userId;
+
     try {
       const response = await fetch(
-        "https://react-native-2f0d8.firebaseio.com/orders/u1.json"
+        `https://react-native-2f0d8.firebaseio.com/orders/${userId}.json`
       );
       if (!response.ok) {
         throw new Error("Something went wrong!");

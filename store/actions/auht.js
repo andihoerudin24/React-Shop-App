@@ -3,7 +3,6 @@ export const LOGIN = 'LOGIN'
 
 export const signup = (email,password) =>{
      return async dispatch =>{
-       console.log(email)
        const response =await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDEeKJpLDIiLhm7v7JKHpQcNFEYCvddQTs',{
             method:'POST',
             headers:{
@@ -26,7 +25,7 @@ export const signup = (email,password) =>{
         }
         const resData = await response.json()
         console.log(resData)
-        dispatch({type:SIGNUP})
+        dispatch({type:SIGNUP,token:resData.idToken,userId:resData.localId})
      }
 }
 
@@ -56,6 +55,6 @@ export const login = (email,password) =>{
        }
        const resData = await response.json()
        console.log(resData)
-       dispatch({type:LOGIN})
+       dispatch({type:LOGIN,token:resData.idToken,userId:resData.localId})
     }
 }

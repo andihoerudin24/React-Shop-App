@@ -16,12 +16,14 @@ import ordersReducer from './store/reducers/orders'
 import ShopNavigation from "./navigation/ShopNavigation";
 import looger from 'redux-logger'
 import ReduxThunk from 'redux-thunk'
+import authReducer from './store/reducers/auth'
 import {composeWithDevTools} from 'redux-devtools-extension'
 
 const rootReducer = combineReducers({
   products: productsReducer,
   cart:cartReducer,
-  orders:ordersReducer
+  orders:ordersReducer,
+  auth:authReducer
 });
 
 
