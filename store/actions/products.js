@@ -89,7 +89,7 @@ export const updateProduct = (id, title, description, imageUrl) => {
   return async (dispatch,getState) => {
     //console.log(getState())
     const token= getState().auth.token
-    console.log('token',token);
+   // console.log('token',token);
     const response= await fetch(
       `https://react-native-2f0d8.firebaseio.com/products/${id}.json`,
       {

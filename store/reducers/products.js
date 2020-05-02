@@ -8,7 +8,7 @@ import {
 import Product from "../../models/product";
 
 const initialState = {
-  availableProducts: PRODUCTS,
+  availableProducts: [],
   userProducts: PRODUCTS.filter(prod => prod.ownerId === "u1")
 };
 

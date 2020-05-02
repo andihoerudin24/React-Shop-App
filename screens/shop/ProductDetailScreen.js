@@ -18,7 +18,7 @@ const ProductDetailScreen = props => {
 
   const productId = props.navigation.getParam("productId");
   const seletedProduct = useSelector(state =>
-    state.products.avaliableProducts.find(prod => prod.id === productId)
+    state.products.availableProducts.find(prod => prod.id === productId)
   );
 
   

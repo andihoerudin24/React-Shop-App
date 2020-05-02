@@ -14,6 +14,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { Platform } from "react-native";
 import EditProductScreen from "../screens/user/EditProductScreen";
 import AuthScreen from '../screens/user/AuthScreen'
+import StartupScreen from '../screens/startupScrenn'
 
 console.disableYellowBox = true;
 const defaultNvOptions = {
@@ -106,6 +107,7 @@ const AuthNavigator = createStackNavigator({
 })
 
 const MainNavigator = createSwitchNavigator({
+   Startup:StartupScreen,
    Auth:AuthNavigator,
    Shop:ShopNavigator
 })
