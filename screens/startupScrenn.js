@@ -18,15 +18,16 @@ const StartupScreen = props =>{
            const transfromdata= JSON.parse(userData);
            const {token,userId,expiryDate} = transfromdata
           
-            //const expirationDate = new Date(expiryDate)
-            console.log('usertoke',token)
+            const expirationDate = new Date(expiryDate)
+            // console.log('usertoke',token)
             //    if(expirationDate <= new Date() || !token ||userId){
             //     props.navigation.navigate('Auth')   
             //     return;
             //    }
+           const expiretionTime = expirationDate.getTime() - new Date().getTime(); 
             
            props.navigation.navigate('Shop')
-           dispatch(authAction.authenticate(userId,token))
+           dispatch(authAction.authenticate(userId,token,expiretionTime))
       }
 
       tryLogin()
