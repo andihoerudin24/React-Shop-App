@@ -1,6 +1,5 @@
 # React-Shop-App
 
-# Learn-Reactnative
 
 #MADE USED Reactnative
 
