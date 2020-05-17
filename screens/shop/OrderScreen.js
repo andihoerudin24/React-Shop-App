@@ -40,7 +40,7 @@ const OrdersScrenn = props => {
   );
 };
 
-OrdersScrenn.navigationOptions = navData => {
+export const screnOptions = navData => {
   return {
     headerTitle: "Your Order",
     headerLeft: () => {

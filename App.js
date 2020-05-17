@@ -17,7 +17,7 @@ import looger from 'redux-logger'
 import ReduxThunk from 'redux-thunk'
 import authReducer from './store/reducers/auth'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import NavigationContainer from './navigation/NavigationContainer'
+import AppNavigator from './navigation/AppNavigator'
 
 const rootReducer = combineReducers({
   products: productsReducer,
@@ -31,7 +31,7 @@ const store = createStore(rootReducer,applyMiddleware(ReduxThunk));
 const App = () => {
   return (
     <Provider store={store}>
-      <NavigationContainer />
+      <AppNavigator />
     </Provider>
   );
 };

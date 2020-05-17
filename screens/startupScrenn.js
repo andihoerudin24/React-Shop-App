@@ -12,7 +12,7 @@ const StartupScreen = props =>{
            const userData =await AsyncStorage.getItem('userData')
            console.log('userData',userData)
            if(!userData){
-            props.navigation.navigate('Auth')   
+            // props.navigation.navigate('Auth')   
             return;
            }
            const transfromdata= JSON.parse(userData);
@@ -26,7 +26,7 @@ const StartupScreen = props =>{
             //    }
            const expiretionTime = expirationDate.getTime() - new Date().getTime(); 
             
-           props.navigation.navigate('Shop')
+           //props.navigation.navigate('Shop')
            dispatch(authAction.authenticate(userId,token,expiretionTime))
       }
 
