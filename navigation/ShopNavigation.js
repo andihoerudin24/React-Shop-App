@@ -26,7 +26,6 @@ import EditProductScreen, {
   ScrenOptions as OptionsEditProductScreen,
 } from "../screens/user/EditProductScreen";
 import AuthScreen,{screenOptions as OptionsAuthScreen} from "../screens/user/AuthScreen";
-import StartupScreen from "../screens/startupScrenn";
 import { useDispatch } from "react-redux";
 import * as authaction from "../store/actions/auht";
 
@@ -103,7 +102,7 @@ export const AdminNavigator = () => {
 
 const ShopDrawerNavigator = createDrawerNavigator();
 
-const ShopNavigator = () => {
+export const ShopNavigator = () => {
   const dispatch = useDispatch();
   return (
     <ShopDrawerNavigator.Navigator
@@ -118,7 +117,7 @@ const ShopNavigator = () => {
                 color={Colors.primary}
                 onPress={() => {
                   dispatch(authaction.logout());
-                  props.navigation.navigate("Auth");
+                  //props.navigation.navigate("Auth");
                 }}
               />
             </SafeAreaView>

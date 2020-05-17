@@ -7,7 +7,8 @@ import {
   TextInput,
   Platform,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
+  YellowBox
 } from "react-native";
 import Font from "../../constants/Font";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -16,11 +17,15 @@ import { useSelector, useDispatch } from "react-redux";
 import * as proudctsActions from "../../store/actions/products";
 import Colors from "../../constants/Colors";
 
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
+
 const EditProductScreen = props => {
   const [isLoading, setisLoading] = useState(false)
   const [error,setError]= useState();
 
-  const prodId = props.navigation.getParam("productId");
+  const prodId = props.route.params ? props.route.params.productId : null;
   const editedProduct = useSelector(state =>
     state.products.userProducts.find(prod => prod.id === prodId)
   );
@@ -69,7 +74,21 @@ const EditProductScreen = props => {
   }, [dispatch, prodId, title, description, imageUrl, price,titleIsValid]);
 
   useEffect(() => {
-    props.navigation.setParams({ submit: submitHandler });
+    props.navigation.setOptions({
+      headerRight: () => {
+        return (
+          <HeaderButtons HeaderButtonComponent={HeaderButton}>
+            <Item
+              title="Save"
+              iconName={
+                Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
+              }
+              onPress={submitHandler}
+            />
+          </HeaderButtons>
+        );
+      }
+    })
   }, [submitHandler]);
 
   const titleChangeHandler = text =>{
@@ -146,25 +165,13 @@ const EditProductScreen = props => {
 };
 
 export const ScrenOptions = navData => {
-  const submitfn = navData.navigation.getParam("submit");
-
+ 
+  const routeParam = navData.route.params ? navData.route.params : {}
   return {
-    headerTitle: navData.navigation.getParam("productId")
+    headerTitle: routeParam.productId
       ? "Edit Product"
       : "Add Product",
-    headerRight: () => {
-      return (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Save"
-            iconName={
-              Platform.OS === "android" ? "md-checkmark" : "ios-checkmark"
-            }
-            onPress={submitfn}
-          />
-        </HeaderButtons>
-      );
-    }
+    
   };
 };
 
