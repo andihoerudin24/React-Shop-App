@@ -24,7 +24,7 @@
     "expo-font": "^8.1.1",
     "moment": "^2.25.3",
     "react": "^16.13.1",
-    "react-native": "0.62.0",
+    "react-native": "0.62.3",
     "react-native-custom-fonts": "^1.0.5",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
